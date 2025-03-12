@@ -1,0 +1,19 @@
+# Build artifacts
+*.o
+*.so
+main
+test_paged_mem
+
+# Temporary files
+*~
+*.swp
+*.swo
+*.tmp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Other generated files
+compile_commands.json
+
