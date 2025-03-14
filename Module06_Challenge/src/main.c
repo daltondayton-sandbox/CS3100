@@ -1,7 +1,6 @@
 #include "paged_mem.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 // Prints the usage message if the memory file argument is missing.
 void print_usage(const char *progname) {
