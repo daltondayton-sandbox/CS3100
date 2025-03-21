@@ -1,3 +1,4 @@
+```
 CS3100/Module07_Challenge ❯ ./simulator < input_file_1
 Enter the number of frames in main memory: Enter the number of pages in the page table: Enter the length of the reference string: Enter the reference string:
 Optimal page faults: 33.00
@@ -21,4 +22,4 @@ Enter the number of frames in main memory: Enter the number of pages in the page
 Optimal page faults: 50.00
 FIFO page faults: 62.50
 Second-Chance page faults: 62.50
-
+```
