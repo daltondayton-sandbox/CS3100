@@ -5,7 +5,6 @@
 #define MAX_RECORDS 1000
 #define MAX_LINE 1024
 
-// Define a simple struct for the fields we need.
 typedef struct {
   char brand[128];
   char city[128];
@@ -13,7 +12,6 @@ typedef struct {
   char state[128];
 } Record;
 
-// Remove all double quotes from a string (in place)
 void removeQuotes(char *str) {
   char *src = str, *dst = str;
   while (*src) {
@@ -40,24 +38,18 @@ int main() {
   // Skip the header line.
   fgets(line, MAX_LINE, in);
 
+  // Use an array of structs or a struct-linked list.
   Record records[MAX_RECORDS];
   int count = 0;
 
-  // Process each subsequent line.
   while (fgets(line, MAX_LINE, in) && count < MAX_RECORDS) {
-    // Remove the newline character.
     line[strcspn(line, "\n")] = '\0';
 
-    // Temporary variables to store the needed fields.
     char brand[128] = "", city[128] = "", name[128] = "", state[128] = "";
     int index = 0;
     char *token = strtok(line, ",");
     while (token) {
-      removeQuotes(token); // Remove any double quotes.
-      // Field order: 0:fdc_id, 1:brand_description, 2:expiration_date,
-      // 3:label_weight, 4:location, 5:acquisition_date, 6:sales_type,
-      // 7:sample_lot_nbr, 8:sell_by_date, 9:store_city, 10:store_name,
-      // 11:store_state, 12:upc_code.
+      removeQuotes(token);
       if (index == 1)
         strncpy(brand, token, sizeof(brand) - 1);
       else if (index == 9)
@@ -69,7 +61,6 @@ int main() {
       token = strtok(NULL, ",");
       index++;
     }
-    // Only store the record if the brand field is non-empty.
     if (brand[0] != '\0') {
       strncpy(records[count].brand, brand, sizeof(records[count].brand) - 1);
       strncpy(records[count].city, city, sizeof(records[count].city) - 1);
@@ -80,18 +71,16 @@ int main() {
   }
   fclose(in);
 
-  // Update: On the 7th record (index 6) replace store_name with "WILDCATS
-  // MARKET"
+  // On the 7th record replace store_name with "WILDCATS MARKET"
   if (count >= 7)
     strncpy(records[6].name, "WILDCATS MARKET", sizeof(records[6].name) - 1);
 
-  // Update: Change all records with state "CA" to "California"
+  // Change all records with state "CA" to "California"
   for (int i = 0; i < count; i++) {
     if (strcmp(records[i].state, "CA") == 0)
       strncpy(records[i].state, "California", sizeof(records[i].state) - 1);
   }
 
-  // Write the selected fields to final.txt with tab-separated values.
   FILE *out = fopen("final.txt", "w");
   if (!out) {
     perror("Cannot open final.txt");
@@ -105,4 +94,3 @@ int main() {
 
   return 0;
 }
-
